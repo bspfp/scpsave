@@ -32,5 +32,6 @@ go.work.sum
 # .vscode/
 
 # generated files
-cmd/**/*.log
-cmd/**/config*.yaml
+cmd/scpsave/*.log
+cmd/scpsave/config*.yaml
+cmd/scpsave/working/*
