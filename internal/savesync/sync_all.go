@@ -11,6 +11,8 @@ import (
 )
 
 func SyncAll(ctx context.Context) error {
+	log.Println("Starting synchronization of all games...")
+
 	var errch = make(chan error, len(config.Value.Games))
 	defer func() {
 		if errch != nil {

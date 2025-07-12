@@ -57,4 +57,6 @@ func main() {
 	}
 
 	gamewatcher.StartWatchGames(ctx)
+
+	log.Println("Exiting...")
 }

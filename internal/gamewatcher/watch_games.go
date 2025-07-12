@@ -28,6 +28,7 @@ func StartWatchGames(ctx context.Context) {
 
 	gameStates := make(map[string]gameState, len(config.Value.Games))
 
+	log.Println("Starting game execution detection.")
 	for {
 		time.Sleep(refreshInterval)
 

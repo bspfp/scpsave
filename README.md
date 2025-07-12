@@ -1,84 +1,70 @@
 # scpsave
 
-유사 게임 클라우드 저장 with SCP
+Cloud Save with SCP
 
-- [사용법](#사용법)
-  - [clone](#clone)
-  - [빌드](#빌드)
-  - [설정 파일 만들기](#설정-파일-만들기)
-  - [설정 파일 수정 후 이름 변경](#설정-파일-수정-후-이름-변경)
-  - [실행](#실행)
-- [설정 파일 내용](#설정-파일-내용)
+- [Usage](#usage)
+  - [Clone](#clone)
+  - [Build](#build)
+  - [Create Configuration File](#create-configuration-file)
+  - [Rename Configuration File](#rename-configuration-file)
+  - [Run](#run)
+- [Configuration File Contents](#configuration-file-contents)
 
-## 사용법
+## Usage
 
-### clone
+### Clone
 
 ```powershell
 cd X:\Working\Folder
 git clone https://github.com/bspfp/scpsave.git
 ```
 
-### 빌드
+### Build
 
-in scpsave/cmd/scpsave
+In `scpsave/cmd/scpsave`
 
 ```powershell
 go build -o scpsave.exe ./...
 ```
 
-### 설정 파일 만들기
+Or `Run Task > build scpsave` in VSCode(open the project as a workspace file.)
 
-in scpsave/cmd/scpsave
+### Create Configuration File
+
+In `scpsave/cmd/scpsave`
 
 ```powershell
 .\scpsave.exe -c
 ```
 
-### 설정 파일 수정 후 이름 변경
+### Rename Configuration File
 
-in scpsave/cmd/scpsave
+In `scpsave/cmd/scpsave`
+
+After editing the file, rename it with the command below:
 
 ```powershell
 Rename-Item -Path .\config.sample.yaml -NewName config.yaml
 ```
 
-### 실행
+### Run
+
+In `scpsave/cmd/scpsave`
 
 ```powershell
 .\scpsave.exe
 ```
 
-## 설정 파일 내용
+## Configuration File Contents
 
-```yaml
-server_address: example.com:22
-username: user
-private_key_path: C:\Users\user\.ssh\id_rsa
-remote_root: /remote/path
-games:
-  - name: Game1
-    local_dir: C:\Users\user\Games\Game1
-    file_patterns:
-      - some.+\\.+\.save
-      - .+\.dat
-    program_name: game1.exe
-  - name: Game2
-    local_dir: C:\Users\user\Games\Game2
-    file_patterns:
-      - .+\.sav
-      - .+\.dat
-    program_name: C:\Game\Folder\game2.exe
-```
-
-| 항목                | 형식                      | 설명                                           |
-| ------------------- | ------------------------- | ---------------------------------------------- |
-| server_address      | host:port                 | ssh 서버 주소                                  |
-| username            | 사용자이름                | ssh 사용자 이름                                |
-| private_key_path    | 파일경로                  | ssh 사용자 개인 암호키 파일 경로               |
-| remote_root         | 업로드될 경로             | 절대 경로로 입력                               |
-| games               | 게임 설정                 | 동기화 대상 게임 설정                          |
-| games.name          | 게임 이름                 | 중복되지 않도록 입력                           |
-| games.local_dir     | 세이브 파일 폴더          | 절대 경로로 입력                               |
-| games.file_patterns | 세이브 파일 필터링 정규식 | `\`문자 이스케이프에 주의해서 입력             |
-| games.program_name  | 실행파일명                | (선택사항) 절대 경로 또는 파일명(filename.ext) |
+| Item                | Format             | Description                                                                                |
+| ------------------- | ------------------ | ------------------------------------------------------------------------------------------ |
+| server_address      | host:port          | SSH server address                                                                         |
+| username            | username           | SSH username                                                                               |
+| private_key_path    | file_path          | SSH user private key file path                                                             |
+| remote_root         | absolute_path      | Absolute path to upload                                                                    |
+| games               | game settings      | Game synchronization settings                                                              |
+| games.name          | game name          | Must be unique                                                                             |
+| games.local_dir     | save_file_folder   | Absolute path to save files                                                                |
+| games.file_patterns | save_file_patterns | Be careful with backslashes and special character escaping                                 |
+| games.program_name  | program_name       | (Optional) Absolute path to the game executable, or just the filename (e.g., filename.exe) |
