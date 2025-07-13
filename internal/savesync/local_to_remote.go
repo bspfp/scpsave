@@ -55,9 +55,8 @@ func localToRemote(
 	}
 
 	baseFilePath := game.BaseMetaFilePath()
-	_ = scp.DeleteLocalFile(baseFilePath)
-	if err := scp.MoveLocalFile(remoteMetaLocal, baseFilePath); err != nil {
-		return fmt.Errorf("[%s] failed to update remote meta file in working: %w", game.Name, err)
+	if err := mine.Save(baseFilePath); err != nil {
+		return fmt.Errorf("[%s] failed to save metadata for %s: %w", game.Name, baseFilePath, err)
 	}
 
 	return nil
