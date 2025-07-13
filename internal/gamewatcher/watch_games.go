@@ -11,7 +11,7 @@ import (
 	"github.com/shirou/gopsutil/v4/process"
 )
 
-const refreshInterval = 5 * time.Second
+const refreshInterval = 3 * time.Second
 
 type gameState int
 
