@@ -34,4 +34,4 @@ go.work.sum
 # generated files
 cmd/scpsave/*.log
 cmd/scpsave/config*.yaml
-cmd/scpsave/working/*
+cmd/scpsave/working/**
