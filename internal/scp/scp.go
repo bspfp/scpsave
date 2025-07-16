@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"path"
@@ -190,9 +191,27 @@ func DeleteLocalFile(localPath string) error {
 }
 
 func MoveLocalFile(oldLocalPath, newLocalPath string) error {
-	_ = os.Remove(newLocalPath)
-	if err := os.Rename(oldLocalPath, newLocalPath); err != nil {
-		return fmt.Errorf("failed to move local file %s: %w", oldLocalPath, err)
+	in, err := os.Open(oldLocalPath)
+	if err != nil {
+		return fmt.Errorf("failed to open local file %s: %w", oldLocalPath, err)
+	}
+	defer in.Close()
+	out, err := os.Create(newLocalPath)
+	if err != nil {
+		return fmt.Errorf("failed to create local file %s: %w", newLocalPath, err)
+	}
+	defer out.Close()
+	if _, err := io.Copy(out, in); err != nil {
+		return fmt.Errorf("failed to copy local file from %s to %s: %w", oldLocalPath, newLocalPath, err)
+	}
+	if err := out.Close(); err != nil {
+		return fmt.Errorf("failed to close local file %s: %w", newLocalPath, err)
+	}
+	if err := in.Close(); err != nil {
+		return fmt.Errorf("failed to close local file %s: %w", oldLocalPath, err)
+	}
+	if err := os.Remove(oldLocalPath); err != nil {
+		return fmt.Errorf("failed to delete old local file %s: %w", oldLocalPath, err)
 	}
 	return nil
 }

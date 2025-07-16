@@ -35,3 +35,4 @@ go.work.sum
 cmd/scpsave/*.log
 cmd/scpsave/config*.yaml
 cmd/scpsave/working/**
+*.lnk
